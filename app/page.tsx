@@ -60,7 +60,7 @@ export default function HomePage() {
             </p>
             <div className="hero-meta">
               <div className="location">Gilbert, Arizona</div>
-              <div className="opening">Opening September 1, 2026</div>
+              <div className="opening">NOW OPEN</div>
             </div>
             <div className="hero-actions">
               <a className="btn primary" href="#book">

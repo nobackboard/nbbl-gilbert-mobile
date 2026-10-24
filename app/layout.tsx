@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "NBBL Gilbert | The Futsal of Basketball",
     description:
-      "The first physical home of No Backboard Basketball. Train your team in Gilbert, Arizona. Opening September 1, 2026.",
+      "The first physical home of No Backboard Basketball. Train your team in Gilbert, Arizona. NOW OPEN.",
     url: "https://nobackboardbasketballgym.com",
     type: "website",
     locale: "en_US",

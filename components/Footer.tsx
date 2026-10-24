@@ -13,7 +13,7 @@ export default function Footer() {
         </div>
         <div className="footer-meta">
           <div className="footer-small">Gilbert, Arizona</div>
-          <div className="footer-small">Opening September 1, 2026</div>
+          <div className="footer-small">NOW OPEN</div>
           <div className="footer-small footer-copy">
             <Link href="/#why">About NBBL</Link>
           </div>

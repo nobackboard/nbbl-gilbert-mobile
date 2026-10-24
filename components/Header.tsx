@@ -73,7 +73,7 @@ export default function Header() {
               </Link>
             ),
           )}
-          <p className="nav-meta">Gilbert, Arizona · Opening 2026</p>
+          <p className="nav-meta">Gilbert, Arizona · NOW OPEN!</p>
         </nav>
         <Link className="btn primary navcta" href="/#book">
           Book Your Team →
