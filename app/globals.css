@@ -251,8 +251,7 @@ header::before {
   min-width: 0;
 }
 
-.brand img,
-.brand span:first-child {
+.brand img {
   width: 40px;
   height: 40px;
   object-fit: contain;
@@ -262,6 +261,10 @@ header::before {
 .brand-logo {
   border-radius: 50%;
   background: #000;
+}
+
+.brand-nbbl-logo {
+  display: block;
 }
 
 .navlinks {
@@ -1565,10 +1568,6 @@ footer {
 }
 
 @media (max-width: 379px) {
-  .brand-text {
-    display: none;
-  }
-
   .navcta {
     padding: 9px 10px;
     font-size: 10px;
@@ -1665,8 +1664,7 @@ footer {
     --header-h: 96px;
   }
 
-  .brand img,
-  .brand span:first-child {
+  .brand img {
     width: 80px;
     height: 80px;
   }

@@ -40,17 +40,33 @@ export default function Header() {
   return (
     <header>
       <div className="shell nav">
-        <Link className="brand" href="/" aria-label="NBBL Gilbert home">
-          <Image
-            src="/assets/logo.png"
-            alt=""
-            width={80}
-            height={80}
-            className="brand-logo"
-            priority
-          />
-          <span className="brand-text">NBBL</span>
-        </Link>
+        <div className="brand">
+          <Link href="/" aria-label="NBBL Gilbert home">
+            <Image
+              src="/assets/logo.png"
+              alt=""
+              width={80}
+              height={80}
+              className="brand-logo"
+              priority
+            />
+          </Link>
+          <a
+            href="https://nobackboard.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="NBBL"
+          >
+            <Image
+              src="/assets/nbbl-logo.webp"
+              alt="NBBL"
+              width={80}
+              height={80}
+              className="brand-nbbl-logo"
+              priority
+            />
+          </a>
+        </div>
         <nav
           id="site-menu"
           className={`navlinks${open ? " open" : ""}`}
