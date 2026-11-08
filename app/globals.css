@@ -1421,6 +1421,57 @@ footer {
   grid-column: 1 / -1;
 }
 
+.form-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.form-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.form-checkbox span {
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.academy-grade-rows {
+  display: grid;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.academy-grade-row {
+  display: grid;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.academy-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .academy-grade-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .form-summary,
 .form-note,
 .form-fallback {

@@ -241,6 +241,7 @@ Add these to `.env.local`:
 | `HUBSPOT_FORM_SHOWCASE` | Form GUID for showcase registration |
 | `HUBSPOT_FORM_CREATOR` | Form GUID for creator access |
 | `HUBSPOT_FORM_FUNDRAISER` | Form GUID for fundraiser inquiries |
+| `HUBSPOT_FORM_ACADEMY` | Form GUID for NBBL Academy interest (see `docs/HUBSPOT_ACADEMY.md`) |
 
 Local `.env.local` already has the PayPal payment links and HubSpot portal/form IDs. Production still needs the same values in Vercel (or the host). Until a value is set, paid forms tell the visitor to email [info@nobackboard.com](mailto:info@nobackboard.com), and inquiry forms return a configuration error.
 
@@ -254,6 +255,7 @@ The site does not embed HubSpot forms. Each website form posts to a matching Hub
 | Showcase | NBBL Showcase Registration | Showcase Inquiries | `HUBSPOT_FORM_SHOWCASE` |
 | Creator access | NBBL Creator Access | Content Creator Inquiries | `HUBSPOT_FORM_CREATOR` |
 | Fundraiser | NBBL Fundraiser Inquiry | Fundraiser Inquiries | `HUBSPOT_FORM_FUNDRAISER` |
+| Academy interest | NBBL Academy Interest | Academy Interest | `HUBSPOT_FORM_ACADEMY` |
 
 A contact can belong to more than one list (for example a coach who books sessions and later registers a showcase). `nbbl_segment` stores the **most recent** inquiry type on the contact record.
 
@@ -283,6 +285,8 @@ Use these **internal names** exactly. Create any that do not already exist.
 | `preferred_dates` | Preferred dates | Single-line text | Showcase, creator |
 | `content_type` | Content type | Single-line text | Creator |
 | `project_description` | Project description | Multi-line text | Creator |
+| `academy_children_count` | Academy children count | Single-line text or number | Academy interest |
+| `academy_children_grades` | Academy children grades | Multi-line text | Academy interest |
 
 Standard HubSpot fields already exist and are used by the API: `firstname`, `email`, `phone`, `company`, `message`.
 
@@ -302,6 +306,8 @@ Add the fields below to each form, including **NBBL Segment** as a hidden field.
 
 **NBBL Fundraiser Inquiry:** `firstname`, `email`, `phone`, `company`, `message`, `nbbl_segment`.
 
+**NBBL Academy Interest:** `firstname`, `lastname`, `email`, `phone`, `academy_children_count`, `academy_children_grades`, `nbbl_segment`. Optional marketing consent uses subscription type **Marketing Information** (`3418397349` — verify in HubSpot). Full checklist: `docs/HUBSPOT_ACADEMY.md`.
+
 The four form GUIDs for portal `247117755` are already in local `.env.local`. Copy them into Vercel for production. To rotate a form, copy the new GUID from the form editor URL or **Share → Embed** (`formId`) into the matching `HUBSPOT_FORM_*` env var.
 
 ### 4. Create segments (active lists)
@@ -316,6 +322,7 @@ Use **Form submission** as the filter so a person can sit on more than one list:
 | Showcase Inquiries | Contact submitted form **NBBL Showcase Registration** |
 | Content Creator Inquiries | Contact submitted form **NBBL Creator Access** |
 | Fundraiser Inquiries | Contact submitted form **NBBL Fundraiser Inquiry** |
+| Academy Interest | Contact submitted form **NBBL Academy Interest** |
 
 Optional extra filter: `nbbl_segment` is equal to the same label. Prefer form submission as the source of truth.
 

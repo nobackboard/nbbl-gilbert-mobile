@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "node --experimental-strip-types --test lib/academy.test.ts lib/hubspot.test.ts"
   },
   "dependencies": {
     "@next/third-parties": "^15.5.27",

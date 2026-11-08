@@ -2,7 +2,8 @@ export type HubSpotField = { name: string; value: string };
 
 export type InquiryKind = "creator" | "fundraiser";
 export type PaidKind = "session" | "showcase";
-export type FormKind = InquiryKind | PaidKind;
+export type AcademyKind = "academy";
+export type FormKind = InquiryKind | PaidKind | AcademyKind;
 
 /** Values written to the HubSpot `nbbl_segment` contact property. */
 export const NBBL_SEGMENTS: Record<FormKind, string> = {
@@ -10,6 +11,7 @@ export const NBBL_SEGMENTS: Record<FormKind, string> = {
   showcase: "Showcase Inquiries",
   creator: "Content Creator Inquiries",
   fundraiser: "Fundraiser Inquiries",
+  academy: "Academy Interest",
 };
 
 export function getNbblSegment(kind: FormKind): string {
@@ -22,6 +24,7 @@ function getFormGuid(kind: FormKind): string | undefined {
     case "showcase": return process.env.HUBSPOT_FORM_SHOWCASE;
     case "creator": return process.env.HUBSPOT_FORM_CREATOR;
     case "fundraiser": return process.env.HUBSPOT_FORM_FUNDRAISER;
+    case "academy": return process.env.HUBSPOT_FORM_ACADEMY;
     default: return undefined;
   }
 }
@@ -32,6 +35,25 @@ export function isHubSpotConfigured(kind: FormKind): boolean {
   return Boolean(portalId && formGuid && !portalId.startsWith("YOUR_") && !formGuid.startsWith("YOUR_"));
 }
 
+export type HubSpotConsentCommunication = {
+  value: boolean;
+  subscriptionTypeId: number;
+  text: string;
+};
+
+export type HubSpotSubmitOptions = {
+  hutk?: string;
+  pageUri?: string;
+  pageName?: string;
+  legalConsentOptions?: {
+    consent: {
+      consentToProcess: boolean;
+      text: string;
+      communications?: HubSpotConsentCommunication[];
+    };
+  };
+};
+
 export type HubSpotSubmissionResult = {
   status: number;
   responseBody: string;
@@ -41,7 +63,7 @@ export type HubSpotSubmissionResult = {
 export async function submitToHubSpot(
   kind: FormKind,
   fields: HubSpotField[],
-  options?: { hutk?: string; pageUri?: string; pageName?: string },
+  options?: HubSpotSubmitOptions,
 ): Promise<HubSpotSubmissionResult> {
   const portalId = process.env.HUBSPOT_PORTAL_ID;
   const formGuid = getFormGuid(kind);
@@ -63,6 +85,9 @@ export async function submitToHubSpot(
   });
 
   const body: Record<string, unknown> = { fields };
+  if (options?.legalConsentOptions) {
+    body.legalConsentOptions = options.legalConsentOptions;
+  }
   if (options?.hutk || options?.pageUri || options?.pageName) {
     body.context = {
       ...(options.hutk ? { hutk: options.hutk } : {}),
