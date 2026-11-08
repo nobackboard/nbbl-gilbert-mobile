@@ -306,7 +306,7 @@ Add the fields below to each form, including **NBBL Segment** as a hidden field.
 
 **NBBL Fundraiser Inquiry:** `firstname`, `email`, `phone`, `company`, `message`, `nbbl_segment`.
 
-**NBBL Academy Interest:** `firstname`, `lastname`, `email`, `phone`, `academy_children_count`, `academy_children_grades`, `nbbl_segment`. Optional marketing consent uses subscription type **Marketing Information** (`3418397349` — verify in HubSpot). Full checklist: `docs/HUBSPOT_ACADEMY.md`.
+**NBBL Academy Interest:** `firstname`, `lastname`, `email`, `phone`, `academy_children_count`, `academy_children_grades`, `nbbl_segment`. Required explicit data-processing consent + optional marketing (**Marketing Information** `3418397349`). Draft form GUID `0fd98b79-27df-4e09-a366-6383c4baef6a` (unpublished). Full checklist: `docs/HUBSPOT_ACADEMY.md`.
 
 The four form GUIDs for portal `247117755` are already in local `.env.local`. Copy them into Vercel for production. To rotate a form, copy the new GUID from the form editor URL or **Share → Embed** (`formId`) into the matching `HUBSPOT_FORM_*` env var.
 

@@ -29,6 +29,14 @@ export type AcademyGradeValue = (typeof ACADEMY_GRADE_OPTIONS)[number]["value"];
 export const ACADEMY_MARKETING_CONSENT_LABEL =
   "Yes, I’d like to receive NBBL Academy launch news and marketing updates by email. I can unsubscribe at any time.";
 
+/** Must match HubSpot draft form data-processing consent (portal 247117755). */
+export const ACADEMY_DATA_PROCESSING_CONSENT_LABEL =
+  "I agree to allow NO BACKBOARD BASKETBALL LEAGUE to store and process my personal data.";
+
+export const ACADEMY_DATA_PROCESSING_CONSENT_API_TEXT = ACADEMY_DATA_PROCESSING_CONSENT_LABEL;
+
+export const HUBSPOT_ACADEMY_FORM_ID_DRAFT = "0fd98b79-27df-4e09-a366-6383c4baef6a";
+
 /**
  * HubSpot subscription type: Marketing Information (portal 247117755).
  * Unverified in this environment — confirm in HubSpot Settings → Email → Subscriptions before go-live.
@@ -106,6 +114,18 @@ export function formatAcademyGradesForHubSpot(entries: ChildGradeEntry[]): strin
     .join("\n");
 }
 
+export type AcademyLegalConsentPayload = {
+  consent: {
+    consentToProcess: boolean;
+    text: string;
+    communications?: Array<{
+      value: boolean;
+      subscriptionTypeId: number;
+      text: string;
+    }>;
+  };
+};
+
 export type AcademyValidationInput = {
   firstName: string;
   lastName: string;
@@ -113,6 +133,7 @@ export type AcademyValidationInput = {
   phone: string;
   childCount: unknown;
   childGrades: unknown;
+  dataProcessingConsent: unknown;
   marketingOptIn: unknown;
   companyWebsite?: string;
 };
@@ -144,6 +165,12 @@ export function validateAcademySubmission(input: AcademyValidationInput): string
   if (typeof gradesResult === "string") {
     return gradesResult;
   }
+  if (typeof input.dataProcessingConsent !== "boolean") {
+    return "Invalid data processing consent";
+  }
+  if (input.dataProcessingConsent !== true) {
+    return "You must agree to data processing before submitting";
+  }
   if (typeof input.marketingOptIn !== "boolean") {
     return "Invalid marketing preference";
   }
@@ -152,4 +179,38 @@ export function validateAcademySubmission(input: AcademyValidationInput): string
 
 export function parseMarketingOptIn(raw: unknown): boolean {
   return raw === true;
+}
+
+export function parseDataProcessingConsent(raw: unknown): boolean {
+  return raw === true;
+}
+
+/**
+ * HubSpot legalConsentOptions — only when the visitor explicitly checked data processing.
+ * Marketing communications are included only when marketingOptIn is true (never hardcoded).
+ */
+export function buildAcademyLegalConsentOptions(
+  dataProcessingConsent: boolean,
+  marketingOptIn: boolean,
+): AcademyLegalConsentPayload | undefined {
+  if (!dataProcessingConsent) {
+    return undefined;
+  }
+
+  const consent: AcademyLegalConsentPayload["consent"] = {
+    consentToProcess: true,
+    text: ACADEMY_DATA_PROCESSING_CONSENT_API_TEXT,
+  };
+
+  if (marketingOptIn) {
+    consent.communications = [
+      {
+        value: true,
+        subscriptionTypeId: HUBSPOT_SUBSCRIPTION_MARKETING_INFORMATION_ID,
+        text: ACADEMY_MARKETING_CONSENT_LABEL,
+      },
+    ];
+  }
+
+  return { consent };
 }

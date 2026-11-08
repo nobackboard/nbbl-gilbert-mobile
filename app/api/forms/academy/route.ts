@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import {
-  ACADEMY_MARKETING_CONSENT_LABEL,
+  buildAcademyLegalConsentOptions,
   formatAcademyGradesForHubSpot,
-  HUBSPOT_SUBSCRIPTION_MARKETING_INFORMATION_ID,
   normalizeChildGrades,
   parseChildCount,
+  parseDataProcessingConsent,
   parseMarketingOptIn,
   validateAcademySubmission,
 } from "@/lib/academy";
@@ -15,9 +15,6 @@ type AcademyBody = {
   fields?: Record<string, unknown>;
   hutk?: string;
 };
-
-const PRIVACY_CONSENT_TEXT =
-  "By submitting this form, you agree that NBBL may store your contact details to follow up about NBBL Academy interest. See our Privacy Policy at https://nobackboardbasketballgym.com/assets/NBBL%20Privacy%20Policy.pdf";
 
 export async function POST(request: Request) {
   const body = parseJsonBody<AcademyBody>(await request.json());
@@ -50,6 +47,7 @@ export async function POST(request: Request) {
     phone,
     childCount: fields.childCount,
     childGrades: fields.childGrades,
+    dataProcessingConsent: fields.dataProcessingConsent,
     marketingOptIn: fields.marketingOptIn,
     companyWebsite,
   });
@@ -68,6 +66,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: childGrades }, { status: 400 });
   }
 
+  const dataProcessingConsent = parseDataProcessingConsent(fields.dataProcessingConsent);
   const marketingOptIn = parseMarketingOptIn(fields.marketingOptIn);
   const gradesText = formatAcademyGradesForHubSpot(childGrades);
 
@@ -81,21 +80,13 @@ export async function POST(request: Request) {
     nbbl_segment: getNbblSegment("academy"),
   });
 
-  const legalConsentOptions = marketingOptIn
-    ? {
-        consent: {
-          consentToProcess: true,
-          text: PRIVACY_CONSENT_TEXT,
-          communications: [
-            {
-              value: true,
-              subscriptionTypeId: HUBSPOT_SUBSCRIPTION_MARKETING_INFORMATION_ID,
-              text: ACADEMY_MARKETING_CONSENT_LABEL,
-            },
-          ],
-        },
-      }
-    : undefined;
+  const legalConsentOptions = buildAcademyLegalConsentOptions(dataProcessingConsent, marketingOptIn);
+  if (!legalConsentOptions) {
+    return NextResponse.json(
+      { error: "You must agree to data processing before submitting" },
+      { status: 400 },
+    );
+  }
 
   try {
     const result = await submitToHubSpot("academy", hubspotFields, {
@@ -105,6 +96,7 @@ export async function POST(request: Request) {
       legalConsentOptions,
     });
     console.info("[NBBL HubSpot] Academy interest submission confirmed", {
+      dataProcessingConsent,
       marketingOptIn,
       status: result.status,
       response: result.responseBody,

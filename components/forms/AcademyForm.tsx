@@ -2,6 +2,7 @@
 
 import { trackEvent } from "@/lib/analytics";
 import {
+  ACADEMY_DATA_PROCESSING_CONSENT_LABEL,
   ACADEMY_GRADE_OPTIONS,
   ACADEMY_MARKETING_CONSENT_LABEL,
   ACADEMY_MAX_CHILDREN,
@@ -16,6 +17,7 @@ type AcademyFields = {
   phone: string;
   childCount: string;
   childGrades: ChildGradeEntry[];
+  dataProcessingConsent: boolean;
   marketingOptIn: boolean;
   companyWebsite: string;
 };
@@ -27,6 +29,7 @@ const emptyFields: AcademyFields = {
   phone: "",
   childCount: "1",
   childGrades: [{ grade: "" }],
+  dataProcessingConsent: false,
   marketingOptIn: false,
   companyWebsite: "",
 };
@@ -98,6 +101,7 @@ export default function AcademyForm() {
             phone: fields.phone,
             childCount: parsedCount,
             childGrades: fields.childGrades,
+            dataProcessingConsent: fields.dataProcessingConsent,
             marketingOptIn: fields.marketingOptIn,
             companyWebsite: fields.companyWebsite,
           },
@@ -261,6 +265,21 @@ export default function AcademyForm() {
           </div>
         </div>
 
+        <label className="form-field form-field-full form-checkbox form-checkbox-required">
+          <input
+            type="checkbox"
+            checked={fields.dataProcessingConsent}
+            onChange={(e) => updateField("dataProcessingConsent", e.target.checked)}
+            required
+          />
+          <span>
+            {ACADEMY_DATA_PROCESSING_CONSENT_LABEL}{" "}
+            <a href="/assets/NBBL%20Privacy%20Policy.pdf" target="_blank" rel="noopener noreferrer">
+              Privacy Policy
+            </a>
+          </span>
+        </label>
+
         <label className="form-field form-field-full form-checkbox">
           <input
             type="checkbox"
@@ -272,10 +291,7 @@ export default function AcademyForm() {
 
         <p className="form-note form-field-full">
           By submitting, you confirm this is an <strong>interest request only</strong>. It does not
-          enroll a child, collect payment, or guarantee a spot.{" "}
-          <a href="/assets/NBBL%20Privacy%20Policy.pdf" target="_blank" rel="noopener noreferrer">
-            Privacy Policy
-          </a>
+          enroll a child, collect payment, or guarantee a spot.
         </p>
 
         <div className="academy-honeypot" aria-hidden="true">

@@ -1443,6 +1443,15 @@ footer {
   color: var(--muted);
 }
 
+.form-checkbox span a {
+  color: var(--yellow);
+  text-decoration: underline;
+}
+
+.form-checkbox-required span {
+  color: #dfe1e6;
+}
+
 .academy-grade-rows {
   display: grid;
   gap: 14px;

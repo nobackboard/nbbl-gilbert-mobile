@@ -1,8 +1,12 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
+  ACADEMY_DATA_PROCESSING_CONSENT_API_TEXT,
+  ACADEMY_MARKETING_CONSENT_LABEL,
   ACADEMY_MAX_CHILDREN,
+  buildAcademyLegalConsentOptions,
   formatAcademyGradesForHubSpot,
+  HUBSPOT_SUBSCRIPTION_MARKETING_INFORMATION_ID,
   normalizeChildGrades,
   parseChildCount,
   validateAcademySubmission,
@@ -64,12 +68,24 @@ describe("validateAcademySubmission", () => {
     phone: "4805550100",
     childCount: 2,
     childGrades: [{ grade: "4" }, { grade: "6" }],
+    dataProcessingConsent: true,
     marketingOptIn: false,
     companyWebsite: "",
   };
 
   it("passes valid payload", () => {
     assert.equal(validateAcademySubmission(base), null);
+  });
+
+  it("rejects missing or false data processing consent", () => {
+    assert.match(
+      validateAcademySubmission({ ...base, dataProcessingConsent: false }) ?? "",
+      /data processing/,
+    );
+    assert.match(
+      validateAcademySubmission({ ...base, dataProcessingConsent: "yes" }) ?? "",
+      /Invalid data processing/,
+    );
   });
 
   it("blocks honeypot", () => {
@@ -86,5 +102,33 @@ describe("validateAcademySubmission", () => {
       childGrades: [],
     });
     assert.match(String(message), /technical limit/);
+  });
+});
+
+describe("buildAcademyLegalConsentOptions", () => {
+  it("returns undefined when data processing consent is false", () => {
+    assert.equal(buildAcademyLegalConsentOptions(false, false), undefined);
+    assert.equal(buildAcademyLegalConsentOptions(false, true), undefined);
+  });
+
+  it("includes processing consent only when marketing is false", () => {
+    const payload = buildAcademyLegalConsentOptions(true, false);
+    assert.ok(payload);
+    assert.equal(payload.consent.consentToProcess, true);
+    assert.equal(payload.consent.text, ACADEMY_DATA_PROCESSING_CONSENT_API_TEXT);
+    assert.equal(payload.consent.communications, undefined);
+  });
+
+  it("adds marketing communications only when both consents are true", () => {
+    const payload = buildAcademyLegalConsentOptions(true, true);
+    assert.ok(payload);
+    assert.equal(payload.consent.consentToProcess, true);
+    assert.deepEqual(payload.consent.communications, [
+      {
+        value: true,
+        subscriptionTypeId: HUBSPOT_SUBSCRIPTION_MARKETING_INFORMATION_ID,
+        text: ACADEMY_MARKETING_CONSENT_LABEL,
+      },
+    ]);
   });
 });
