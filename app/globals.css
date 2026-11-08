@@ -8,6 +8,8 @@
   --line: rgba(255, 255, 255, 0.14);
   --max: 1280px;
   --header-h: 64px;
+  --font-body: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-display: "Barlow Condensed", sans-serif;
 }
 
 * {

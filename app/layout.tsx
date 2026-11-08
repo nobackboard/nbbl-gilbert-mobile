@@ -1,24 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Barlow_Condensed, Inter } from "next/font/google";
 import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import AnalyticsClickListener from "@/components/AnalyticsClickListener";
+import "./fonts";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-const barlowCondensed = Barlow_Condensed({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800", "900"],
-  variable: "--font-display",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nobackboardbasketballgym.com"),
@@ -75,8 +61,8 @@ export default function RootLayout({
   const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
 
   return (
-    <html lang="en" className={`${inter.variable} ${barlowCondensed.variable}`}>
-      <body className={inter.className}>
+    <html lang="en">
+      <body>
         <AnalyticsClickListener />
         {children}
         {hubspotPortalId && !hubspotPortalId.startsWith("YOUR_") ? (

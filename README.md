@@ -19,6 +19,12 @@ Parents, guardians, and participating coaches sign waivers on **`/waivers`** thr
 
 Vercel production URL: [nbblgilbertdemo.vercel.app](https://nbblgilbertdemo.vercel.app)
 
+**Vercel preview (Academy branch):** team project **`mike-7206/nbbl-gilbert-demo`**, GitHub repo **`nobackboard/nbbl-gilbert-mobile`**. Preview env `HUBSPOT_FORM_ACADEMY` is scoped to branch `cursor/academy-interest-form-f756`. Production `main` on the gym site is unchanged.
+
+### Typography / build reliability
+
+Body and display fonts are **self-hosted** via [`@fontsource-variable/inter`](https://fontsource.org) and [`@fontsource/barlow-condensed`](https://fontsource.org) (`app/fonts.ts`). We no longer use `next/font/google` at build time because Google Fonts sometimes returns extensionless `/l/font?kit=…` URLs; Next.js 15.5.x then crashes in `@next/font` (`loader.js:122`, vercel/next.js#99114). Typography stays Inter + Barlow Condensed with the same CSS variables (`--font-body`, `--font-display`).
+
 The site is designed as a sports magazine / performance brand / basketball media property, not a generic gym, SaaS, or corporate template.
 
 ## Recent Changes
