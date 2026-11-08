@@ -135,12 +135,19 @@ export type AcademyValidationInput = {
   childGrades: unknown;
   dataProcessingConsent: unknown;
   marketingOptIn: unknown;
+  /** Honeypot — must stay empty (browsers may still autofill if labeled like a URL field). */
+  botCheck?: string;
+  /** @deprecated Renamed to botCheck — accepted for one release of in-flight clients. */
   companyWebsite?: string;
 };
 
+export const ACADEMY_HONEYPOT_ERROR =
+  "We could not verify this submission. If your browser autofilled a hidden field, refresh the page and try again, or email info@nobackboard.com.";
+
 export function validateAcademySubmission(input: AcademyValidationInput): string | null {
-  if (input.companyWebsite?.trim()) {
-    return "Unable to submit request";
+  const honeypot = (input.botCheck ?? input.companyWebsite ?? "").trim();
+  if (honeypot) {
+    return ACADEMY_HONEYPOT_ERROR;
   }
   if (!input.firstName) {
     return "Missing required field: firstName";

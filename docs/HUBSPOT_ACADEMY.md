@@ -69,7 +69,7 @@ Privacy PDF: `https://nobackboardbasketballgym.com/assets/NBBL%20Privacy%20Polic
 |-------|-------|
 | Max children per submission | 20 |
 | Max “Other” grade text | 200 chars |
-| Honeypot | `companyWebsite` must be empty |
+| Honeypot | `botCheck` must be empty (do not label like a website field — autofill) |
 
 ## What the Cloud Agent did **not** do
 

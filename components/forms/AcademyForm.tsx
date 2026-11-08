@@ -8,6 +8,7 @@ import {
   ACADEMY_MAX_CHILDREN,
   type ChildGradeEntry,
 } from "@/lib/academy";
+import { serializeAcademyFormPayload } from "@/lib/academy-client-payload";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
 type AcademyFields = {
@@ -19,7 +20,7 @@ type AcademyFields = {
   childGrades: ChildGradeEntry[];
   dataProcessingConsent: boolean;
   marketingOptIn: boolean;
-  companyWebsite: string;
+  botCheck: string;
 };
 
 const emptyFields: AcademyFields = {
@@ -31,7 +32,7 @@ const emptyFields: AcademyFields = {
   childGrades: [{ grade: "" }],
   dataProcessingConsent: false,
   marketingOptIn: false,
-  companyWebsite: "",
+  botCheck: "",
 };
 
 function getHubSpotCookie(): string | undefined {
@@ -94,7 +95,7 @@ export default function AcademyForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fields: {
+          ...serializeAcademyFormPayload({
             firstName: fields.firstName,
             lastName: fields.lastName,
             email: fields.email,
@@ -103,8 +104,8 @@ export default function AcademyForm() {
             childGrades: fields.childGrades,
             dataProcessingConsent: fields.dataProcessingConsent,
             marketingOptIn: fields.marketingOptIn,
-            companyWebsite: fields.companyWebsite,
-          },
+            botCheck: fields.botCheck,
+          }),
           hutk: getHubSpotCookie(),
         }),
       });
@@ -112,6 +113,8 @@ export default function AcademyForm() {
       const data = (await response.json()) as {
         success?: boolean;
         error?: string;
+        stage?: "configuration" | "validation" | "hubspot";
+        code?: string;
         hubspot?: "submitted" | "failed";
         hubspotDiagnostic?: { status: number; responseBody: string; contentType?: string };
       };
@@ -132,7 +135,13 @@ export default function AcademyForm() {
       }
 
       if (!response.ok || !data.success) {
-        throw new Error(data.error ?? "Unable to submit your request.");
+        const fallback =
+          data.stage === "hubspot"
+            ? "We could not save your interest in HubSpot. Please try again or email info@nobackboard.com."
+            : data.stage === "configuration"
+              ? "Academy interest is not configured yet. Email info@nobackboard.com."
+              : "Unable to submit your request.";
+        throw new Error(data.error ?? fallback);
       }
 
       trackEvent("contact_submit", { form: "academy" });
@@ -156,8 +165,8 @@ export default function AcademyForm() {
     <form className="nbbl-form academy-form" onSubmit={handleSubmit}>
       <p className="form-note">
         Join the <strong>NBBL Academy interest list</strong> for parents and guardians. We use your
-        contact details only to share Academy launch updates — not for enrollment, payment, or
-        reserved spots.
+        email and phone only for <strong>Academy interest follow-up</strong> (not enrollment or
+        payment). Optional email below is separate Academy marketing — unchecked unless you opt in.
       </p>
 
       <div className="form-grid">
@@ -296,12 +305,16 @@ export default function AcademyForm() {
 
         <div className="academy-honeypot" aria-hidden="true">
           <label className="form-field">
-            <span>Company website</span>
+            <span>Leave empty</span>
             <input
+              type="text"
               tabIndex={-1}
               autoComplete="off"
-              value={fields.companyWebsite}
-              onChange={(e) => updateField("companyWebsite", e.target.value)}
+              inputMode="none"
+              value={fields.botCheck}
+              onChange={(e) => updateField("botCheck", e.target.value)}
+              data-lpignore="true"
+              data-1p-ignore
             />
           </label>
         </div>

@@ -88,10 +88,10 @@ describe("validateAcademySubmission", () => {
     );
   });
 
-  it("blocks honeypot", () => {
+  it("blocks honeypot via botCheck", () => {
     assert.match(
-      validateAcademySubmission({ ...base, companyWebsite: "https://spam.test" }) ?? "",
-      /Unable to submit/,
+      validateAcademySubmission({ ...base, botCheck: "https://spam.test" }) ?? "",
+      /autofill|verify/i,
     );
   });
 
