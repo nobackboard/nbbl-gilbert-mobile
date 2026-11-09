@@ -19,6 +19,12 @@ Parents, guardians, and participating coaches sign waivers on **`/waivers`** thr
 
 Vercel production URL: [nbblgilbertdemo.vercel.app](https://nbblgilbertdemo.vercel.app)
 
+**Vercel preview (Academy branch):** team project **`mike-7206/nbbl-gilbert-demo`**, GitHub repo **`nobackboard/nbbl-gilbert-mobile`**. Preview env `HUBSPOT_FORM_ACADEMY` is scoped to branch `cursor/academy-interest-form-f756`. Production `main` on the gym site is unchanged.
+
+### Typography / build reliability
+
+Body and display fonts are **self-hosted** via [`@fontsource-variable/inter`](https://fontsource.org) and [`@fontsource/barlow-condensed`](https://fontsource.org) (`app/fonts.ts`). We no longer use `next/font/google` at build time because Google Fonts sometimes returns extensionless `/l/font?kit=…` URLs; Next.js 15.5.x then crashes in `@next/font` (`loader.js:122`, vercel/next.js#99114). Typography stays Inter + Barlow Condensed with the same CSS variables (`--font-body`, `--font-display`).
+
 The site is designed as a sports magazine / performance brand / basketball media property, not a generic gym, SaaS, or corporate template.
 
 ## Recent Changes
@@ -241,6 +247,7 @@ Add these to `.env.local`:
 | `HUBSPOT_FORM_SHOWCASE` | Form GUID for showcase registration |
 | `HUBSPOT_FORM_CREATOR` | Form GUID for creator access |
 | `HUBSPOT_FORM_FUNDRAISER` | Form GUID for fundraiser inquiries |
+| `HUBSPOT_FORM_ACADEMY` | Form GUID for NBBL Academy interest (see `docs/HUBSPOT_ACADEMY.md`) |
 
 Local `.env.local` already has the PayPal payment links and HubSpot portal/form IDs. Production still needs the same values in Vercel (or the host). Until a value is set, paid forms tell the visitor to email [info@nobackboard.com](mailto:info@nobackboard.com), and inquiry forms return a configuration error.
 
@@ -254,6 +261,7 @@ The site does not embed HubSpot forms. Each website form posts to a matching Hub
 | Showcase | NBBL Showcase Registration | Showcase Inquiries | `HUBSPOT_FORM_SHOWCASE` |
 | Creator access | NBBL Creator Access | Content Creator Inquiries | `HUBSPOT_FORM_CREATOR` |
 | Fundraiser | NBBL Fundraiser Inquiry | Fundraiser Inquiries | `HUBSPOT_FORM_FUNDRAISER` |
+| Academy interest | NBBL Academy Interest | Academy Interest | `HUBSPOT_FORM_ACADEMY` |
 
 A contact can belong to more than one list (for example a coach who books sessions and later registers a showcase). `nbbl_segment` stores the **most recent** inquiry type on the contact record.
 
@@ -283,6 +291,8 @@ Use these **internal names** exactly. Create any that do not already exist.
 | `preferred_dates` | Preferred dates | Single-line text | Showcase, creator |
 | `content_type` | Content type | Single-line text | Creator |
 | `project_description` | Project description | Multi-line text | Creator |
+| `academy_children_count` | Academy children count | Single-line text or number | Academy interest |
+| `academy_children_grades` | Academy children grades | Multi-line text | Academy interest |
 
 Standard HubSpot fields already exist and are used by the API: `firstname`, `email`, `phone`, `company`, `message`.
 
@@ -302,6 +312,8 @@ Add the fields below to each form, including **NBBL Segment** as a hidden field.
 
 **NBBL Fundraiser Inquiry:** `firstname`, `email`, `phone`, `company`, `message`, `nbbl_segment`.
 
+**NBBL Academy Interest:** `firstname`, `lastname`, `email`, `phone`, `academy_children_count`, `academy_children_grades`, `nbbl_segment`. Required explicit data-processing consent + optional marketing (**Marketing Information** `3418397349`). Draft form GUID `0fd98b79-27df-4e09-a366-6383c4baef6a` (unpublished). Full checklist: `docs/HUBSPOT_ACADEMY.md`.
+
 The four form GUIDs for portal `247117755` are already in local `.env.local`. Copy them into Vercel for production. To rotate a form, copy the new GUID from the form editor URL or **Share → Embed** (`formId`) into the matching `HUBSPOT_FORM_*` env var.
 
 ### 4. Create segments (active lists)
@@ -316,6 +328,7 @@ Use **Form submission** as the filter so a person can sit on more than one list:
 | Showcase Inquiries | Contact submitted form **NBBL Showcase Registration** |
 | Content Creator Inquiries | Contact submitted form **NBBL Creator Access** |
 | Fundraiser Inquiries | Contact submitted form **NBBL Fundraiser Inquiry** |
+| Academy Interest | Contact submitted form **NBBL Academy Interest** |
 
 Optional extra filter: `nbbl_segment` is equal to the same label. Prefer form submission as the source of truth.
 

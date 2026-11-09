@@ -1,16 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import AcademyForm from "./forms/AcademyForm";
 import CreatorForm from "./forms/CreatorForm";
 import FundraiserForm from "./forms/FundraiserForm";
 import SessionForm from "./forms/SessionForm";
 import ShowcaseForm from "./forms/ShowcaseForm";
 
-export type FormTab = "book" | "showcase-register" | "creator-access" | "fundraiser-inquiry";
+export type FormTab =
+  | "book"
+  | "showcase-register"
+  | "creator-access"
+  | "fundraiser-inquiry"
+  | "academy-interest";
 
 const TABS: Array<{ id: FormTab; label: string }> = [
   { id: "book", label: "Book Sessions" },
   { id: "showcase-register", label: "Register Showcase" },
+  { id: "academy-interest", label: "Academy Interest" },
   { id: "creator-access", label: "Creator Access" },
   { id: "fundraiser-inquiry", label: "Fundraiser Inquiry" },
 ];
@@ -95,6 +102,7 @@ export default function FormHub() {
         {activeTab === "book" ? <SessionForm initialPackageId={initialPackageId} /> : null}
         {activeTab === "showcase-register" ? <ShowcaseForm /> : null}
         {activeTab === "creator-access" ? <CreatorForm /> : null}
+        {activeTab === "academy-interest" ? <AcademyForm /> : null}
         {activeTab === "fundraiser-inquiry" ? <FundraiserForm /> : null}
       </div>
 
