@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "Waivers",
   description:
     "Sign NBBL Gilbert waivers for minor athletes and for coaches or parents who enter active athletic areas.",
+  alternates: {
+    canonical: "/waivers",
+  },
 };
 
 export default function WaiversPage() {

@@ -6,6 +6,9 @@ import Header from "@/components/Header";
 export const metadata: Metadata = {
   title: "Payment received",
   robots: { index: false, follow: false },
+  alternates: {
+    canonical: "/thanks",
+  },
 };
 
 export default function ThanksPage() {
