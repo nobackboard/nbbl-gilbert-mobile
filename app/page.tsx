@@ -73,6 +73,64 @@ export default function HomePage() {
           </div>
         </section>
 
+        <section className="section academy-promo" id="academy" aria-labelledby="academy-heading">
+          <div className="shell academy-grid">
+            <a
+              className="academy-flyer"
+              href="https://academy.nobackboard.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Register for the No Backboard Shooting & Scoring Academy"
+            >
+              <Image
+                src="/assets/academy-promo.webp"
+                alt="No Backboard Basketball Gym Shooting & Scoring Academy Open House, November 19–21. Co-ed, grades 6–9, 90-minute group classes, $30 introductory class. Register now at nobackboard.com/academy."
+                width={720}
+                height={1280}
+                sizes="(max-width: 899px) 90vw, 380px"
+              />
+            </a>
+            <div className="academy-copy">
+              <p className="eyebrow academy-kicker">Now enrolling · Grades 6–9</p>
+              <h2 className="display academy-title" id="academy-heading">
+                Shooting &amp; Scoring
+                <br />
+                <span className="accent-yellow">Academy</span>
+              </h2>
+              <p className="lead">
+                Train different. Play your game better. Coach Mark Tee
+                Armstrong&apos;s 90-minute classes build precision shooting,
+                faster decisions and finishing on the 16-inch UHoop, then put it
+                to work in a live scrimmage.
+              </p>
+              <ul className="academy-points">
+                <li>
+                  <b>Open House, Nov 19–21:</b> a $30 introductory class, with
+                  the $30 credited if you join within 7 days.
+                </li>
+                <li>
+                  <b>Classes start Tuesday, Dec 1:</b> Tuesday–Saturday, co-ed,
+                  grouped by grade.
+                </li>
+                <li>
+                  <b>Founding Family rates</b> for the first 50 families.
+                </li>
+              </ul>
+              <div className="hero-actions academy-actions">
+                <a className="btn primary" href="https://academy.nobackboard.com/" target="_blank" rel="noopener noreferrer">
+                  Reserve a $30 Class →
+                </a>
+                <a className="btn outline" href="https://academy.nobackboard.com/#plans" target="_blank" rel="noopener noreferrer">
+                  See Plans →
+                </a>
+              </div>
+              <p className="academy-where">
+                Eduprize High School Gym · 1383 E Baseline Rd, Gilbert, AZ 85233
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section className="section intro" id="difference">
           <div className="intro-visual" aria-hidden="true">
             <BleedImage

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const LINKS: Array<{ href: string; label: string; external?: boolean }> = [
+  { href: "https://academy.nobackboard.com/", label: "Academy", external: true },
   { href: "/#book", label: "Train Your Team" },
   { href: "/#showcases", label: "Showcases" },
   { href: "/#difference", label: "The NBBL Difference" },
@@ -106,6 +107,20 @@ export default function Header() {
           <span />
         </button>
       </div>
+      <a
+        className="academy-bar"
+        href="https://academy.nobackboard.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className="ab-new">New</span>
+        <span className="ab-long">
+          Shooting &amp; Scoring Academy · Grades 6–9 · Open House Nov 19–21 ·
+          $30 intro class
+        </span>
+        <span className="ab-short">Academy Open House · Nov 19–21</span>
+        <span className="ab-go">Register →</span>
+      </a>
     </header>
   );
 }

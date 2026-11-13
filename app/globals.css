@@ -2113,3 +2113,194 @@ footer {
     opacity: 1 !important;
   }
 }
+
+/* ---- Academy promo: banner under the header + section ---- */
+:root {
+  --promo-h: 40px;
+}
+
+html {
+  scroll-padding-top: calc(76px + var(--promo-h));
+}
+
+.academy-bar {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  min-height: var(--promo-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--yellow);
+  color: #090a0f;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.academy-bar:hover {
+  background: #fff27a;
+}
+
+.academy-bar:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: -4px;
+}
+
+.academy-bar .ab-new {
+  background: var(--red);
+  color: #fff;
+  padding: 3px 7px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+.academy-bar .ab-go {
+  white-space: nowrap;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.academy-bar .ab-long {
+  display: none;
+}
+
+body.nav-open .academy-bar {
+  display: none;
+}
+
+.hero {
+  padding-top: calc(var(--header-h) + var(--promo-h) + 10px);
+}
+
+.hero .bleed-media {
+  top: calc(var(--header-h) + var(--promo-h));
+}
+
+.academy-grid {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+
+.academy-flyer {
+  display: block;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  transition: transform 0.2s ease;
+}
+
+.academy-flyer:hover {
+  transform: translateY(-3px);
+}
+
+.academy-flyer:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 4px;
+}
+
+.academy-flyer img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.academy-copy {
+  min-width: 0;
+}
+
+.academy-kicker {
+  color: var(--yellow);
+  opacity: 1;
+}
+
+.academy-title {
+  font-size: clamp(56px, 14vw, 112px);
+  margin: 10px 0 22px;
+}
+
+.accent-yellow {
+  color: var(--yellow);
+}
+
+.academy-points {
+  list-style: none;
+  padding: 0;
+  margin: 26px 0 30px;
+  display: grid;
+  gap: 12px;
+  max-width: 640px;
+}
+
+.academy-points li {
+  position: relative;
+  padding-left: 22px;
+  color: rgba(255, 255, 255, 0.86);
+  line-height: 1.5;
+}
+
+.academy-points li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.55em;
+  width: 9px;
+  height: 9px;
+  background: var(--red);
+  transform: rotate(45deg);
+}
+
+.academy-points b {
+  color: #fff;
+}
+
+.academy-actions {
+  flex-wrap: wrap;
+}
+
+.academy-where {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@media (min-width: 700px) {
+  .academy-bar {
+    font-size: 13px;
+  }
+
+  .academy-bar .ab-long {
+    display: inline;
+  }
+
+  .academy-bar .ab-short {
+    display: none;
+  }
+
+  .hero {
+    padding-top: calc(var(--header-h) + var(--promo-h) + 14px);
+  }
+}
+
+@media (min-width: 900px) {
+  .academy-grid {
+    grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+    gap: 64px;
+  }
+}
+
+.thanks-page,
+.waivers-page {
+  padding-top: calc(140px + var(--promo-h));
+}
