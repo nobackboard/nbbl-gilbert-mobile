@@ -30,6 +30,11 @@ export const WAIVER_FORMS: WaiverForm[] = [
     title: "Participating Coach / Parent Liability Waiver",
     href: "https://waiver.smartwaiver.com/w/tgthxmmfknnqqbshaqgkfz/web/",
   },
+  {
+    id: "kov9as4lcraiizdh6yyvkw",
+    title: "Coach / Independent Contractor / Vendor Media Release",
+    href: "https://waiver.smartwaiver.com/w/kov9as4lcraiizdh6yyvkw/web/",
+  },
 ];
 
 export const SMARTWAIVER_WIDGET_SRC =

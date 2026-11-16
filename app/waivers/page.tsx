@@ -27,7 +27,8 @@ export default function WaiversPage() {
             (18 and over) sign the adult participation waiver and media
             release for themselves. Coaches,
             trainers, and parents who enter the court sign the participating
-            adult waiver.
+            adult waiver. Coaches, independent contractors, and vendors who
+            appear on NBBL Gilbert content sign the media release.
           </p>
           <p className="lead">
             Use the Sign waivers bar at the bottom of this page, or open a form

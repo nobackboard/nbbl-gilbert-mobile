@@ -113,6 +113,7 @@ The SmartWaiver Waiver Index widget (`splashpage-195553`) loads on the homepage 
 | Adult Athlete Participation Waiver | `pugqfgnkbrfaruzzzugtas` | `https://waiver.smartwaiver.com/w/pugqfgnkbrfaruzzzugtas/web/` |
 | Adult Athlete Media, Likeness & Content Release | `9hs8uv1fbvsptqu9fzhw5x` | `https://waiver.smartwaiver.com/w/9hs8uv1fbvsptqu9fzhw5x/web/` |
 | Participating Coach / Parent Liability Waiver | `tgthxmmfknnqqbshaqgkfz` | `https://waiver.smartwaiver.com/w/tgthxmmfknnqqbshaqgkfz/web/` |
+| Coach / Independent Contractor / Vendor Media Release | `kov9as4lcraiizdh6yyvkw` | `https://waiver.smartwaiver.com/w/kov9as4lcraiizdh6yyvkw/web/` |
 
 To add another form, append it to `WAIVER_FORMS` in `lib/waivers.ts`. The index widget already lists every waiver on splash page `195553`.
 
