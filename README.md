@@ -102,7 +102,7 @@ Site-wide contact email is [info@nobackboard.com](mailto:info@nobackboard.com), 
 
 ### Waivers (SmartWaiver)
 
-Parents and guardians sign minor-athlete forms on **`/waivers`** (`app/waivers/page.tsx`). Coaches, trainers, and parents who enter the court sign the participating adult waiver on the same page. Form IDs and the widget script live in `lib/waivers.ts`. The page is in the header, footer, and `app/sitemap.ts`.
+Parents and guardians sign minor-athlete forms on **`/waivers`** (`app/waivers/page.tsx`). Adult athletes (18+) sign the adult participation waiver and media release there too. Coaches, trainers, and parents who enter the court sign the participating adult waiver on the same page. Form IDs and the widget script live in `lib/waivers.ts`. The page is in the header, footer, and `app/sitemap.ts`.
 
 The SmartWaiver Waiver Index widget (`splashpage-195553`) loads on the homepage and **`/waivers`**. The floating bar uses site primary red (`#f21d2f`) and white text. Each form also has a **Sign** link that opens the hosted SmartWaiver page in a new tab.
 
@@ -110,6 +110,8 @@ The SmartWaiver Waiver Index widget (`splashpage-195553`) loads on the homepage 
 |--------|-------------|------------|
 | Consent for Minor Athlete Participation | `qqjwuvczszqltachbpia2` | `https://waiver.smartwaiver.com/w/qqjwuvczszqltachbpia2/web/` |
 | Minor Athlete Media, Likeness & Content Release | `ctpkadpmynwsfthiyjtgii` | `https://waiver.smartwaiver.com/w/ctpkadpmynwsfthiyjtgii/web/` |
+| Adult Athlete Participation Waiver | `pugqfgnkbrfaruzzzugtas` | `https://waiver.smartwaiver.com/w/pugqfgnkbrfaruzzzugtas/web/` |
+| Adult Athlete Media, Likeness & Content Release | `9hs8uv1fbvsptqu9fzhw5x` | `https://waiver.smartwaiver.com/w/9hs8uv1fbvsptqu9fzhw5x/web/` |
 | Participating Coach / Parent Liability Waiver | `tgthxmmfknnqqbshaqgkfz` | `https://waiver.smartwaiver.com/w/tgthxmmfknnqqbshaqgkfz/web/` |
 
 To add another form, append it to `WAIVER_FORMS` in `lib/waivers.ts`. The index widget already lists every waiver on splash page `195553`.

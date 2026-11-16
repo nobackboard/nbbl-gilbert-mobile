@@ -16,6 +16,16 @@ export const WAIVER_FORMS: WaiverForm[] = [
     href: "https://waiver.smartwaiver.com/w/ctpkadpmynwsfthiyjtgii/web/",
   },
   {
+    id: "pugqfgnkbrfaruzzzugtas",
+    title: "Adult Athlete Participation Waiver",
+    href: "https://waiver.smartwaiver.com/w/pugqfgnkbrfaruzzzugtas/web/",
+  },
+  {
+    id: "9hs8uv1fbvsptqu9fzhw5x",
+    title: "Adult Athlete Media, Likeness & Content Release",
+    href: "https://waiver.smartwaiver.com/w/9hs8uv1fbvsptqu9fzhw5x/web/",
+  },
+  {
     id: "tgthxmmfknnqqbshaqgkfz",
     title: "Participating Coach / Parent Liability Waiver",
     href: "https://waiver.smartwaiver.com/w/tgthxmmfknnqqbshaqgkfz/web/",

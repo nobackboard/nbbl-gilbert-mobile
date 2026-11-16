@@ -7,7 +7,7 @@ import { WAIVER_FORMS } from "@/lib/waivers";
 export const metadata: Metadata = {
   title: "Waivers",
   description:
-    "Sign NBBL Gilbert waivers for minor athletes and for coaches or parents who enter active athletic areas.",
+    "Sign NBBL Gilbert waivers for minor athletes, adult athletes, and for coaches or parents who enter active athletic areas.",
   alternates: {
     canonical: "/waivers",
   },
@@ -23,7 +23,9 @@ export default function WaiversPage() {
           <h1 className="display">Waivers.</h1>
           <p className="lead">
             Parents and guardians sign the minor-athlete forms before a player
-            trains, competes, or appears on NBBL Gilbert content. Coaches,
+            trains, competes, or appears on NBBL Gilbert content. Adult athletes
+            (18 and over) sign the adult participation waiver and media
+            release for themselves. Coaches,
             trainers, and parents who enter the court sign the participating
             adult waiver.
           </p>
